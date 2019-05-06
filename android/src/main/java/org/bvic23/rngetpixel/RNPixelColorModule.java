@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import android.net.Uri;
+
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -126,7 +128,8 @@ class RNPixelColorModule extends ReactContextBaseJavaModule {
     }
 
     private Bitmap loadImage(final String imageName) throws IOException {
-        final InputStream inputStream = context.getAssets().open("drawable/" + imageName + ".png");
+        Uri UriImageName = Uri.parse(imageName);
+	final InputStream inputStream = context.getContentResolver().openInputStream( UriImageName );
         final Drawable drawable = Drawable.createFromStream(inputStream, null);
         return ((BitmapDrawable) drawable).getBitmap();
     }
